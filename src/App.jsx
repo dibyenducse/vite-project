@@ -1,19 +1,22 @@
 import { useState } from 'react';
+import './App.css';
 
 const App = () => {
     const [clock, setClock] = useState('');
 
-    function handleClick() {
+    function updateClock() {
         const date = new Date();
-        console.log('Button Clicked');
         setClock(date.toLocaleTimeString());
     }
+
+    setInterval(updateClock, 1000);
+
     return (
         <div>
             <h1 className="heading">
                 <span className="text">{clock}</span>
             </h1>
-            <button type="button" onClick={handleClick}>
+            <button type="button" onClick={updateClock}>
                 Click Here
             </button>
         </div>
