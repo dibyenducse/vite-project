@@ -1,5 +1,24 @@
-import { useState } from 'react';
-import './App.css';
+import ReactDom from 'react-dom';
+import react from 'react';
+//
+
+let states = [];
+let stateIndex = -1;
+
+function useState(defaultValue) {
+    const index = ++stateIndex;
+
+    if (states[index]) return states[index];
+
+    const setValue = (newValue) => {
+        states[index][0] = newValue;
+
+        renderWithDibbo;
+    };
+    const returnArray = [defaultValue, setValue];
+    states[index] = returnArray;
+    return returnArray;
+}
 
 function App() {
     const [todo, setTodo] = useState('');
@@ -27,4 +46,9 @@ function App() {
         </div>
     );
 }
-export default App;
+
+function renderWithDibbo() {
+    stateIndex = -1;
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+}
+renderWithDibbo();
