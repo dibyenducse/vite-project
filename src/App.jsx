@@ -1,30 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
-function App() {
-    const [todo, setTodo] = useState('');
-    const [warning, setWarning] = useState(null);
+const App = () => {
+    const [clock, setClock] = useState('');
 
-    const handleInput = (e) => {
-        const inputValue = e.target.value;
-        const updateWarning = inputValue.includes('.js') ? 'You need js' : null;
+    function updateClock(lang) {
+        const date = new Date();
+        setClock(date.toLocaleTimeString(lang));
+    }
 
-        setTodo(inputValue);
-        setWarning(updateWarning);
-    };
+    useEffect(() => {
+        console.log('Starting Timer');
+        const intervalId = setInterval(updateClock, 1000);
+
+        // Clear the interval when the component unmounts
+        return () => clearInterval(intervalId);
+    }, []);
+
     return (
         <div>
-            <p>{todo}</p>
-            <p>
-                <textarea
-                    name="todo"
-                    value={todo}
-                    onChange={handleInput}
-                ></textarea>
-            </p>
-            <hr />
-            <h2>{warning || 'Good Choice'}</h2>
+            <h1 className="heading">
+                <span className="text">{clock}</span>
+            </h1>
+            <button type="button" onClick={() => updateClock('bn-BD')}>
+                Click Here
+            </button>
         </div>
     );
-}
+};
+
 export default App;
