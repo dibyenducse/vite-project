@@ -10,14 +10,18 @@ const App = () => {
     }
 
     const tick = () => {
-        console.log('Set Time');
+        console.log('Timer Running');
         setClock(new Date());
     };
 
     useEffect(() => {
         console.log('Render Clock in useEffect');
-        setInterval(tick, 1000);
-    }, [clock]);
+        const interval = setInterval(tick, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
 
     return (
         <div>
