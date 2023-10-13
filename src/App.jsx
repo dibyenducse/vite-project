@@ -2,27 +2,33 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 const App = () => {
-    const [clock, setClock] = useState('');
+    const [clock, setClock] = useState(new Date());
+    const [lang, setLang] = useState(false);
 
-    function updateClock(lang) {
-        const date = new Date();
-        setClock(date.toLocaleTimeString(lang));
+    function updateClock() {
+        setLang(!lang);
     }
 
-    useEffect(() => {
-        console.log('Starting Timer');
-        const intervalId = setInterval(updateClock, 1000);
+    const tick = () => {
+        console.log('Set Time');
+        setClock(new Date());
+    };
 
-        // Clear the interval when the component unmounts
-        return () => clearInterval(intervalId);
-    }, []);
+    useEffect(() => {
+        console.log('Render Clock in useEffect');
+        setInterval(tick, 1000);
+    }, [clock]);
 
     return (
         <div>
             <h1 className="heading">
-                <span className="text">{clock}</span>
+                <span className="text">
+                    {lang
+                        ? clock.toLocaleTimeString('en-US')
+                        : clock.toLocaleTimeString('bn-BD')}
+                </span>
             </h1>
-            <button type="button" onClick={() => updateClock('bn-BD')}>
+            <button type="button" onClick={updateClock}>
                 Click Here
             </button>
         </div>
