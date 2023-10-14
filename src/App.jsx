@@ -19,6 +19,7 @@ const App = () => {
         const interval = setInterval(tick, 1000);
 
         return () => {
+            console.log('Componant unmount');
             clearInterval(interval);
         };
     }, []);
