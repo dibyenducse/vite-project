@@ -1,43 +1,23 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-const App = () => {
-    const [clock, setClock] = useState(new Date());
-    const [lang, setLang] = useState(false);
+// import React, { useState } from 'react';
 
-    function updateClock() {
-        setLang(!lang);
-    }
+export default function App() {
+    const [count, setCount] = useState(0);
 
-    const tick = () => {
-        console.log('Timer Running');
-        setClock(new Date());
+    const increment = () => {
+        for (let i = 0; i < 5; i++) {
+            setCount(count + 1);
+        }
     };
-
-    useEffect(() => {
-        console.log('Render Clock in useEffect');
-        const interval = setInterval(tick, 1000);
-
-        return () => {
-            console.log('Componant unmount');
-            clearInterval(interval);
-        };
-    }, []);
 
     return (
         <div>
-            <h1 className="heading">
-                <span className="text">
-                    {lang
-                        ? clock.toLocaleTimeString('en-US')
-                        : clock.toLocaleTimeString('bn-BD')}
-                </span>
-            </h1>
-            <button type="button" onClick={updateClock}>
-                Click Here
-            </button>
+            <p>{count}</p>
+            <div>
+                <button onClick={increment}>Increment</button>
+            </div>
         </div>
     );
-};
-
-export default App;
+}
